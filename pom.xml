@@ -39,10 +39,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.jetty.version>9.3.8.v20160314</project.jetty.version>
-    <project.mapdb.version>3.0.1</project.mapdb.version>
-    <project.easyweb.version>1.2</project.easyweb.version>
-    <project.utilities.version>1.0</project.utilities.version>
+		<project.jetty.version>9.3.8.v20160314</project.jetty.version>
+		<project.mapdb.version>3.0.1</project.mapdb.version>
+		<project.easyweb.version>1.2</project.easyweb.version>
+		<project.utilities.version>1.0</project.utilities.version>
 	</properties>
 
 	<dependencies>
@@ -57,7 +57,7 @@
 			<artifactId>utilities</artifactId>
 			<version>${project.utilities.version}</version>
 		</dependency>
-    <dependency>
+		<dependency>
 			<groupId>org.mapdb</groupId>
 			<artifactId>mapdb</artifactId>
 			<version>${project.mapdb.version}</version>

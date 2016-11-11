@@ -1,0 +1,6 @@
+/target/
+/.settings/
+.classpath
+.project
+/webscheduler.odb
+/webscheduler.odb.wal.0

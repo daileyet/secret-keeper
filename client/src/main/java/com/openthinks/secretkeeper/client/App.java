@@ -25,19 +25,26 @@
 */
 package com.openthinks.secretkeeper.client;
 
+import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
+
+import com.openthinks.libs.i18n.I18n;
+import com.openthinks.libs.i18n.I18nApplicationLocale;
+import com.openthinks.secretkeeper.client.controller.MainFramePanelController;
+import com.openthinks.secretkeeper.client.model.TransferData;
+
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
  * @author dailey.yet@outlook.com
  *
  */
-public class App extends Application {
+public class App extends Application implements Observer {
 
 	public static void main(String[] args) {
 		launch(args);
@@ -45,24 +52,33 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Button btn = new Button();
-		btn.setText("Say 'Hello World'");
-		btn.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("Hello World!");
-			}
+		I18nApplicationLocale.getInstance().addObserver(this);
+		//primaryStage.getIcons().add(ResourceLoader.APP_ICON);
+		primaryStage.setTitle(I18n.getMessage(ResourceLoader.Bundles.UI, "app.title"));
+		primaryStage.setOnCloseRequest((event) -> {
+			System.exit(0);
 		});
-
-		StackPane root = new StackPane();
-		root.getChildren().add(btn);
-
-		Scene scene = new Scene(root, 300, 250);
-
-		primaryStage.setTitle("Hello World!");
+		TransferData data = TransferData.build(primaryStage);
+		Scene scene = getMainScene(data);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+	}
+
+	private Scene getMainScene(TransferData data) throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(ResourceLoader.FXML_MAINFRAME);
+		loader.setResources(I18n.getResourceBundle(ResourceLoader.Bundles.UI));
+		Parent root = loader.load();
+		MainFramePanelController controller = loader.getController();
+		controller.setTransferData(data);
+		Scene mainScene = new Scene(root);
+		return mainScene;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

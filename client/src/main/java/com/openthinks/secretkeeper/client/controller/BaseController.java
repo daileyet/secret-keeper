@@ -25,10 +25,17 @@
 */
 package com.openthinks.secretkeeper.client.controller;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+
+import com.openthinks.libs.i18n.I18n;
+import com.openthinks.libs.i18n.I18nApplicationLocale;
+import com.openthinks.secretkeeper.client.ResourceLoader;
+import com.openthinks.secretkeeper.client.model.TransferData;
 
 import javafx.fxml.Initializable;
 
@@ -37,23 +44,44 @@ import javafx.fxml.Initializable;
  *
  */
 public abstract class BaseController implements Initializable, Observer {
+	protected ResourceBundle resourceBundle;
+	protected TransferData transferData;
 
 	/* (non-Javadoc)
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		I18nApplicationLocale.getInstance().addObserver(this);
+		this.resourceBundle = resources;
+		this.initModel();
+		try {
+			this.initUI();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	protected void initModel() {
+	}
+
+	protected void initUI() throws IOException {
+	}
+
+	public void setTransferData(TransferData transferData) {
+		this.transferData = transferData;
+	}
+
+	public ResourceBundle getResourceBundle() {
+		return resourceBundle;
 	}
 
 	/* (non-Javadoc)
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-
+	public void update(Observable o, Object newlocale) {
+		this.resourceBundle = I18n.getResourceBundle(ResourceLoader.Bundles.UI, (Locale) newlocale);
 	}
 
 }

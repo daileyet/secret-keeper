@@ -16,6 +16,10 @@
 	<description>Secret Keeper JavaFx Client</description>
 	<url>https://github.com/daileyet/secret-keeper</url>
 
+	<properties>
+		<project.i18n.version>2.0</project.i18n.version>
+	</properties>
+
 	<licenses>
 		<license>
 			<name>The Apache License, Version 2.0</name>
@@ -46,6 +50,15 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
 	</distributionManagement>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.openthinks.libs</groupId>
+			<artifactId>i18n</artifactId>
+			<version>${project.i18n.version}</version>
+		</dependency>
+	</dependencies>
+	
 	<build>
 		<resources>
 			<resource>
