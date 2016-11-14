@@ -14,6 +14,7 @@ public class ResourceLoader {
 	public static final Image APP_ICON;
 	public static final URL FXML_MAINFRAME;
 	public static final URL FXML_TREEVIEW;
+	public static final URL FXML_LISTVIEW;
 	public static final URL CSS_APP;
 	public static final String BASE_PACK_DIR = "resources/lang/";
 
@@ -23,6 +24,8 @@ public class ResourceLoader {
 				.getResource("/com/openthinks/secretkeeper/client/view/fxml/MainFramePanel.fxml");
 		FXML_TREEVIEW = ResourceLoader.class
 				.getResource("/com/openthinks/secretkeeper/client/view/fxml/CategoryTreeViewPanel.fxml");
+		FXML_LISTVIEW = ResourceLoader.class
+				.getResource("/com/openthinks/secretkeeper/client/view/fxml/ContentLeftPanel.fxml");
 		// app icon and css style
 		CSS_APP = ResourceLoader.class.getResource("");
 		APP_ICON = new Image(ResourceLoader.class.getResourceAsStream(""));

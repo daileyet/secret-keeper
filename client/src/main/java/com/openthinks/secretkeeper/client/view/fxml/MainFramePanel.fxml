@@ -7,10 +7,18 @@
 
 <BorderPane id="bp_root" fx:id="bp_root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.openthinks.secretkeeper.client.controller.MainFramePanelController">
    <center>
-      <SplitPane id="sp_main" dividerPositions="0.2" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <SplitPane id="sp_main" dividerPositions="0.2" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane id="sp_main_left" fx:id="sp_main_left" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
-          <AnchorPane id="sp_main_right" minHeight="0.0" minWidth="0.0" prefHeight="338.0" prefWidth="369.0" />
+          <AnchorPane id="sp_main_left" fx:id="sp_main_left" maxHeight="1.7976931348623157E308" maxWidth="280.0" minHeight="0.0" minWidth="0.0" />
+          <AnchorPane id="sp_main_right" minHeight="0.0">
+               <children>
+                  <SplitPane id="sp_content" dividerPositions="0.29797979797979796" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane id="sp_content_left" fx:id="sp_content_left" minHeight="0.0" minWidth="0.0" />
+                      <AnchorPane id="sp_content_right" fx:id="sp_content_right" minHeight="0.0" minWidth="100.0" />
+                    </items>
+                  </SplitPane>
+               </children></AnchorPane>
         </items>
       </SplitPane>
    </center>

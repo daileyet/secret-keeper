@@ -35,7 +35,6 @@ import java.util.ResourceBundle;
 import com.openthinks.libs.i18n.I18n;
 import com.openthinks.libs.i18n.I18nApplicationLocale;
 import com.openthinks.secretkeeper.client.ResourceLoader;
-import com.openthinks.secretkeeper.client.model.TransferData;
 
 import javafx.fxml.Initializable;
 
@@ -45,7 +44,6 @@ import javafx.fxml.Initializable;
  */
 public abstract class BaseController implements Initializable, Observer {
 	protected ResourceBundle resourceBundle;
-	protected TransferData transferData;
 
 	/* (non-Javadoc)
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
@@ -66,10 +64,6 @@ public abstract class BaseController implements Initializable, Observer {
 	}
 
 	protected void initUI() throws IOException {
-	}
-
-	public void setTransferData(TransferData transferData) {
-		this.transferData = transferData;
 	}
 
 	public ResourceBundle getResourceBundle() {

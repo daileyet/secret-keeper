@@ -31,7 +31,6 @@ import java.util.Observer;
 
 import com.openthinks.libs.i18n.I18n;
 import com.openthinks.libs.i18n.I18nApplicationLocale;
-import com.openthinks.secretkeeper.client.controller.MainFramePanelController;
 import com.openthinks.secretkeeper.client.model.TransferData;
 
 import javafx.application.Application;
@@ -69,8 +68,6 @@ public class App extends Application implements Observer {
 		loader.setLocation(ResourceLoader.FXML_MAINFRAME);
 		loader.setResources(I18n.getResourceBundle(ResourceLoader.Bundles.UI));
 		Parent root = loader.load();
-		MainFramePanelController controller = loader.getController();
-		controller.setTransferData(data);
 		Scene mainScene = new Scene(root);
 		return mainScene;
 	}
