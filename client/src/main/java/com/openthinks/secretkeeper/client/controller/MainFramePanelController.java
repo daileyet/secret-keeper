@@ -20,11 +20,25 @@ public class MainFramePanelController extends BaseController {
 	@FXML
 	private AnchorPane sp_content_left;
 
+	@FXML
+	private AnchorPane sp_content_right;
+
 	@Override
 	protected void initUI() throws IOException {
 		super.initUI();
 		initCategoryTreeViewPanel();
 		initContentLeftPanel();
+		initContentRightPanel();
+	}
+
+	private void initContentRightPanel() throws IOException {
+		FXMLLoader loader = new FXMLLoader(ResourceLoader.FXML_HTMLEDITOR, this.getResourceBundle());
+		AnchorPane htmlEditorPanel = loader.load();
+		sp_content_right.getChildren().add(htmlEditorPanel);
+		AnchorPane.setLeftAnchor(htmlEditorPanel, 0D);
+		AnchorPane.setRightAnchor(htmlEditorPanel, 0D);
+		AnchorPane.setTopAnchor(htmlEditorPanel, 0D);
+		AnchorPane.setBottomAnchor(htmlEditorPanel, 0D);
 	}
 
 	private void initContentLeftPanel() throws IOException {
