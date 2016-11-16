@@ -46,6 +46,7 @@ import javafx.stage.Stage;
 public class App extends Application implements Observer {
 
 	public static void main(String[] args) {
+		AppConfigureManager.load(args).configure();
 		launch(args);
 	}
 
