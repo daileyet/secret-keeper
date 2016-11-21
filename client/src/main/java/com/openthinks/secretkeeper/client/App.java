@@ -31,7 +31,6 @@ import java.util.Observer;
 
 import com.openthinks.libs.i18n.I18n;
 import com.openthinks.libs.i18n.I18nApplicationLocale;
-import com.openthinks.secretkeeper.client.model.TransferData;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -47,6 +46,7 @@ public class App extends Application implements Observer {
 
 	public static void main(String[] args) {
 		AppConfigureManager.load(args).configure();
+
 		launch(args);
 	}
 
@@ -58,13 +58,12 @@ public class App extends Application implements Observer {
 		primaryStage.setOnCloseRequest((event) -> {
 			System.exit(0);
 		});
-		TransferData data = TransferData.build(primaryStage);
-		Scene scene = getMainScene(data);
+		Scene scene = getMainScene();
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
-	private Scene getMainScene(TransferData data) throws IOException {
+	private Scene getMainScene() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(ResourceLoader.FXML_MAINFRAME);
 		loader.setResources(I18n.getResourceBundle(ResourceLoader.Bundles.UI));

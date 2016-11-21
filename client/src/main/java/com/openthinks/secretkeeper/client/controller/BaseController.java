@@ -53,11 +53,15 @@ public abstract class BaseController implements Initializable, Observer {
 		I18nApplicationLocale.getInstance().addObserver(this);
 		this.resourceBundle = resources;
 		this.initModel();
+		this.initEvents();
 		try {
 			this.initUI();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	protected void initEvents() {
 	}
 
 	protected void initModel() {

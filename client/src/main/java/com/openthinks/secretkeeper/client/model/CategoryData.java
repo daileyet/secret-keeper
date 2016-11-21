@@ -10,11 +10,13 @@ import com.openthinks.secretkeeper.common.domain.Category;
 public class CategoryData {
 	private String name;
 	private Category preload;
-	private Set<CategoryData> children;
+	private Set<CategoryData> childrenCategory;
 	private CategoryData parent;
+	private Set<ItemData> childrenItem;
 
 	public CategoryData() {
-		this.children = Collections.synchronizedSet(new HashSet<>());
+		this.childrenCategory = Collections.synchronizedSet(new HashSet<>());
+		this.childrenItem = Collections.synchronizedSet(new HashSet<>());
 	}
 
 	public CategoryData(Category preload) {
@@ -29,7 +31,8 @@ public class CategoryData {
 		super();
 		this.name = name;
 		this.preload = preload;
-		this.children = Collections.synchronizedSet(new HashSet<>());
+		this.childrenCategory = Collections.synchronizedSet(new HashSet<>());
+		this.childrenItem = Collections.synchronizedSet(new HashSet<>());
 		this.parent = parent;
 	}
 
@@ -54,23 +57,28 @@ public class CategoryData {
 		return preload;
 	}
 
-	public Set<CategoryData> getChildren() {
-		return children;
+	public Set<CategoryData> getChildrenCategory() {
+		return childrenCategory;
 	}
 
-	public void setChildren(Set<CategoryData> children) {
-		this.children = children;
-	}
-
-	public void addChild(CategoryData categoryData) {
+	public void setChildrenCategory(Set<CategoryData> children) {
+		this.childrenCategory = children;
 		if (children != null) {
-			this.children.add(categoryData);
+			children.parallelStream().forEach((cateData) -> {
+				cateData.setParent(this);
+			});
+		}
+	}
+
+	public void addChildCategory(CategoryData categoryData) {
+		if (childrenCategory != null) {
+			this.childrenCategory.add(categoryData);
 			categoryData.setParent(this);
 		}
 	}
 
-	public int childrenSize() {
-		return children == null ? 0 : children.size();
+	public int childrenCategorySize() {
+		return childrenCategory == null ? 0 : childrenCategory.size();
 	}
 
 	public CategoryData getParent() {
@@ -90,6 +98,38 @@ public class CategoryData {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	public Set<ItemData> getChildrenItem() {
+		return childrenItem;
+	}
+
+	public void setChildrenItem(Set<ItemData> childrenItem) {
+		this.childrenItem = childrenItem;
+		if (childrenItem != null) {
+			childrenItem.parallelStream().forEach((itemData) -> {
+				itemData.setParent(this);
+			});
+		}
+	}
+
+	public int childrenItemSize() {
+		return childrenItem == null ? 0 : childrenItem.size();
+	}
+
+	public void addChildItem(ItemData itemData) {
+		if (childrenItem != null) {
+			this.childrenItem.add(itemData);
+			itemData.setParent(this);
+		}
+	}
+
+	public boolean isLeafLevel() {
+		return childrenItemSize() != 0;
+	}
+
+	public boolean isBranchLevel() {
+		return childrenCategorySize() != 0;
 	}
 
 }
