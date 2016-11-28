@@ -34,9 +34,15 @@ import java.util.ResourceBundle;
 
 import com.openthinks.libs.i18n.I18n;
 import com.openthinks.libs.i18n.I18nApplicationLocale;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 import com.openthinks.secretkeeper.client.ResourceLoader;
+import com.openthinks.secretkeeper.client.controller.support.ControlsDictionary;
 
+import javafx.css.Styleable;
+import javafx.event.Event;
 import javafx.fxml.Initializable;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  * @author dailey.yet@outlook.com
@@ -68,6 +74,28 @@ public abstract class BaseController implements Initializable, Observer {
 	}
 
 	protected void initUI() throws IOException {
+	}
+
+	/**
+	 * dispatch event to bind registered event handler 
+	 * @param event {@link Event}
+	 */
+	public void dispatchEventHandler(Event event) {
+		String eventCode = "";
+		Object styleObj = null;
+		if (event instanceof ContextMenuEvent || event instanceof MouseEvent) {
+			styleObj = event.getSource();
+		} else {
+			styleObj = event.getTarget();
+			//
+		}
+		if (styleObj instanceof Styleable) {
+			eventCode = ((Styleable) styleObj).getId();
+			ControlsDictionary.fireEventHandler(eventCode, event);
+		} else {
+			ProcessLogger.error("Event dispatch not successed! Unregistered control:" + event);
+		}
+
 	}
 
 	public ResourceBundle getResourceBundle() {

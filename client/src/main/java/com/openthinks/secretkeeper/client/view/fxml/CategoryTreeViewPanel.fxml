@@ -6,10 +6,17 @@
 
 <ScrollPane id="sp_treeview" fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.openthinks.secretkeeper.client.controller.CategoryTreeViewPanelController">
    <content>
-      <TreeView id="tv_categories" fx:id="tv_categories">
+      <TreeView id="tv_categories" fx:id="tv_categories" onContextMenuRequested="#dispatchEventHandler" onMouseClicked="#dispatchEventHandler">
          <padding>
             <Insets bottom="1.0" right="1.0" />
          </padding>
+         <contextMenu>
+            <ContextMenu id="cm_tree_menus" fx:id="cm_tree_menus" onAutoHide="#dispatchEventHandler" onHidden="#dispatchEventHandler" onHiding="#dispatchEventHandler" onShowing="#dispatchEventHandler" onShown="#dispatchEventHandler">
+              <items>
+                <MenuItem id="mi_new_notebook" fx:id="mi_new_notebook" mnemonicParsing="false" onAction="#dispatchEventHandler" onMenuValidation="#dispatchEventHandler" text="Create Notebook" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
       </TreeView>
    </content>
 </ScrollPane>

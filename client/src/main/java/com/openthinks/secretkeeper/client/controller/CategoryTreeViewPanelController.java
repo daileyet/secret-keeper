@@ -17,6 +17,7 @@ import com.openthinks.secretkeeper.common.utils.BeanLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
@@ -24,6 +25,8 @@ public class CategoryTreeViewPanelController extends BaseController {
 
 	@FXML
 	private TreeView<CategoryData> tv_categories;
+	@FXML
+	private ContextMenu cm_tree_menus;
 
 	private CategoryService categoryService = BeanLoader.loadBean(CategoryService.class);
 
