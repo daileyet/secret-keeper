@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="ap_category_dialog_panel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="165.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.openthinks.secretkeeper.client.controller.CategoryNewPanelController">
+   <children>
+      <Label id="lbl_category_title" fx:id="lbl_category_title" layoutX="25.0" layoutY="26.0" text="Title:" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="26.0" />
+      <TextField id="txt_category_title" fx:id="txt_category_title" layoutX="25.0" layoutY="58.0" onInputMethodTextChanged="#dispatchEventHandler" prefHeight="25.0" prefWidth="316.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="58.0" />
+      <Button id="btn_category_dialog_save" fx:id="btn_category_dialog_save" disable="true" layoutX="224.0" layoutY="126.0" mnemonicParsing="false" onAction="#dispatchEventHandler" prefHeight="25.0" prefWidth="62.0" text="Save" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="95.0" />
+      <Button id="btn_category_dialog_cancel" fx:id="btn_category_dialog_cancel" layoutX="282.0" layoutY="126.0" mnemonicParsing="false" onAction="#dispatchEventHandler" prefHeight="25.0" prefWidth="62.0" text="Cancel" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="25.0" />
+   </children>
+</AnchorPane>

@@ -28,12 +28,13 @@ package com.openthinks.secretkeeper.client.controller.support;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.openthinks.secretkeeper.client.controller.support.ctvpc.ContextMenuActionList;
+import com.openthinks.secretkeeper.client.controller.support.ctvpc.MenuActionList;
+
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 
 /**
@@ -43,20 +44,23 @@ import javafx.stage.WindowEvent;
 public final class ControlsDictionary {
 	private static final Map<String, ControlEventMap> allEventMap = new ConcurrentHashMap<>();
 	/**
-	 * initial action map
+	 * initial event map
 	 */
 	static {
 		//control id <=> event map
 		ControlEventMap.valueOf("mi_new_notebook").append(ActionEvent.ACTION, MenuActionList::createNoteBook);
 
 		ControlEventMap.valueOf("cm_tree_menus")
-				.append(WindowEvent.WINDOW_SHOWING, MenuActionList::contextMenuOnShowing)
-				.append(WindowEvent.WINDOW_SHOWN, MenuActionList::contextMenuOnShown);
+				.append(WindowEvent.WINDOW_SHOWING, ContextMenuActionList::contextMenuOnShowing)
+				.append(WindowEvent.WINDOW_SHOWN, ContextMenuActionList::contextMenuOnShown);
 
-		ControlEventMap.valueOf("tv_categories")
-				.append(ContextMenuEvent.CONTEXT_MENU_REQUESTED, MenuActionList::contextMenuOnRequested)
-				.append(MouseEvent.MOUSE_CLICKED, MenuActionList::treeViewOnMouseClicked);
-	}//
+		//ControlEventMap.valueOf("tv_categories")
+	}// end of initial event map
+
+	public static final <T extends Event> void register(String eventCode, EventType<T> eventType,
+			EventHandler<T> handler) {
+		ControlEventMap.valueOf(eventCode).append(eventType, handler);
+	}
 
 	@SuppressWarnings("unchecked")
 	public static final <T extends Event> EventHandler<T> getEventHandler(String eventCode, EventType<T> eventType) {

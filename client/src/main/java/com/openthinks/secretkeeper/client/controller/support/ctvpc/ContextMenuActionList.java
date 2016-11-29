@@ -16,48 +16,35 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: MenuActionList.java 
+* @Title: ContextMenuActionList.java 
 * @Package com.openthinks.secretkeeper.client.controller.support 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Nov 28, 2016
+* @date Nov 29, 2016
 * @version V1.0   
 */
-package com.openthinks.secretkeeper.client.controller.support;
+package com.openthinks.secretkeeper.client.controller.support.ctvpc;
 
-import javafx.event.ActionEvent;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.event.EventTarget;
 import javafx.stage.WindowEvent;
 
 /**
  * @author dailey.yet@outlook.com
  *
  */
-public final class MenuActionList {
+public final class ContextMenuActionList {
 
-	public static void createNoteBook(ActionEvent event) {
-		System.out.println("create notebook");
-	}
+	/*
+	 * TreeView context menu action
+	 */
 
 	public static void contextMenuOnShowing(WindowEvent event) {
-		event.consume();
-		System.out.println("context menu showing");
+		EventTarget target = event.getTarget();
+		//		if(target instanceof ContextMenu){
+		//			((ContextMenu)target).getItems().get(0).visibleProperty()
+		//		}
 	}
 
 	public static void contextMenuOnShown(WindowEvent event) {
-		event.consume();
-		System.out.println("context menu shown");
 	}
-
-	public static void contextMenuOnRequested(ContextMenuEvent event) {
-		System.out.println("context menu on requested");
-		event.consume();
-	}
-
-	public static void treeViewOnMouseClicked(MouseEvent event) {
-		System.out.println("tree view on mouse clicked");
-		event.consume();
-	}
-
 }

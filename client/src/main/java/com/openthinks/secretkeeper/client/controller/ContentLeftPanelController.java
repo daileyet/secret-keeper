@@ -36,7 +36,7 @@ public class ContentLeftPanelController extends BaseController {
 			ProcessLogger.debug("List view: Change selected item from " + oldValue + " to " + newValue);
 			if (newValue != null) {
 				String htmlText = newValue.getPreload().getContent();
-				BeanLoader.loadBean(TransferData.class).getController(ContentRightpanelController.class)
+				BeanLoader.loadBean(TransferData.class).getController(ContentRightPanelController.class)
 						.setContent(htmlText);
 			}
 		};

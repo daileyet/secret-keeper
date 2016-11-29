@@ -16,69 +16,58 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: App.java 
-* @Package com.openthinks.secretkeeper.client 
+* @Title: MenuActionList.java 
+* @Package com.openthinks.secretkeeper.client.controller.support 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Nov 2, 2016
+* @date Nov 28, 2016
 * @version V1.0   
 */
-package com.openthinks.secretkeeper.client;
+package com.openthinks.secretkeeper.client.controller.support.ctvpc;
 
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
 
 import com.openthinks.libs.i18n.I18n;
-import com.openthinks.libs.i18n.I18nApplicationLocale;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
+import com.openthinks.secretkeeper.client.ResourceLoader;
 import com.openthinks.secretkeeper.client.model.TransferData;
 import com.openthinks.secretkeeper.common.utils.BeanLoader;
 
-import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
  * @author dailey.yet@outlook.com
  *
  */
-public class App extends Application implements Observer {
+public final class MenuActionList {
 
-	public static void main(String[] args) {
-		AppConfigureManager.load(args).configure();
-
-		launch(args);
-	}
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		I18nApplicationLocale.getInstance().addObserver(this);
-		//primaryStage.getIcons().add(ResourceLoader.APP_ICON);
-		BeanLoader.loadBean(TransferData.class).setPrimaryStage(primaryStage);
-		primaryStage.setTitle(I18n.getMessage(ResourceLoader.Bundles.UI, "app.title"));
-		primaryStage.setOnCloseRequest((event) -> {
-			System.exit(0);
-		});
-		Scene scene = getMainScene();
-		primaryStage.setScene(scene);
-		primaryStage.show();
-	}
-
-	private Scene getMainScene() throws IOException {
+	/**
+	 * handler for click menu item "Create Notebook"
+	 * @param event ActionEvent
+	 */
+	public static void createNoteBook(ActionEvent event) {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(ResourceLoader.FXML_MAINFRAME);
+		loader.setLocation(ResourceLoader.FXML_CATEGORYDIALOG);
 		loader.setResources(I18n.getResourceBundle(ResourceLoader.Bundles.UI));
-		Parent root = loader.load();
-		Scene mainScene = new Scene(root);
-		return mainScene;
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-
+		try {
+			AnchorPane anchorPane = loader.load();
+			Stage stage = new Stage();
+			//stage.getIcons().add(ResourceLoader.APP_ICON);
+			stage.initOwner(BeanLoader.loadBean(TransferData.class).getPrimaryStage());
+			stage.setTitle(I18n.getMessage(ResourceLoader.Bundles.UI, "stage.category.newdialog.title"));
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setResizable(false);
+			Scene scene = new Scene(anchorPane);
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			ProcessLogger.error(e);
+		}
 	}
 
 }
