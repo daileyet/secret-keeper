@@ -30,6 +30,7 @@ import java.io.IOException;
 import com.openthinks.libs.i18n.I18n;
 import com.openthinks.libs.utilities.logger.ProcessLogger;
 import com.openthinks.secretkeeper.client.ResourceLoader;
+import com.openthinks.secretkeeper.client.controller.CategoryTreeViewPanelController;
 import com.openthinks.secretkeeper.client.model.TransferData;
 import com.openthinks.secretkeeper.common.utils.BeanLoader;
 
@@ -41,6 +42,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
+ * ContextMenu menu item event handler list for {@link CategoryTreeViewPanelController}
  * @author dailey.yet@outlook.com
  *
  */

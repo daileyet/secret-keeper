@@ -30,14 +30,18 @@ import java.util.Map;
 import org.eclipse.collections.impl.map.mutable.ConcurrentHashMap;
 
 import com.openthinks.libs.utilities.Checker;
+import com.openthinks.secretkeeper.client.controller.CategoryTreeViewPanelController;
 import com.openthinks.secretkeeper.client.model.CategoryData;
+import com.openthinks.secretkeeper.client.model.TransferData;
 import com.openthinks.secretkeeper.common.StaticDict;
+import com.openthinks.secretkeeper.common.utils.BeanLoader;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.MenuItem;
 
 /**
+ * ContextMenu item visable management for {@link CategoryTreeViewPanelController}
  * @author dailey.yet@outlook.com
  *
  */
@@ -71,7 +75,15 @@ public final class ContextMenuItemsPropetyPool {
 		return observableValue;
 	}
 
+	public static void compute() {
+		CategoryData categoryData = BeanLoader.loadBean(TransferData.class).getSelectedCategoryData();
+		compute(categoryData);
+	}
+
 	public static void compute(CategoryData categoryData) {
+		Checker.require(categoryData).notNull();
+		//ProcessLogger.debug(categoryData.toString());
+
 		reset();
 		if (categoryData.getLevel() == StaticDict.CATEGORY_ROOT_LEVEL) {
 			getVisableObservableValue("smi_create").set(false);
@@ -86,7 +98,14 @@ public final class ContextMenuItemsPropetyPool {
 			getVisableObservableValue("smi_operate").set(false);
 			getVisableObservableValue("mi_properties_notebook").set(false);
 		} else if (categoryData.getLevel() == StaticDict.CATEGORY_CHILD_LEVEL_2) {
+			getVisableObservableValue("mi_new_notebook").set(false);
+			getVisableObservableValue("smi_create").set(false);
 			getVisableObservableValue("m_in_notebook").set(false);
+		}
+
+		if (categoryData.isLeafLevel()) {
+			getVisableObservableValue("mi_new_notebook").set(false);
+			getVisableObservableValue("smi_create").set(false);
 		}
 	}
 

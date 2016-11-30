@@ -27,6 +27,7 @@ package com.openthinks.secretkeeper.client.controller;
 
 import java.io.IOException;
 
+import com.openthinks.libs.utilities.Checker;
 import com.openthinks.secretkeeper.client.controller.support.ControlsDictionary;
 import com.openthinks.secretkeeper.client.model.CategoryData;
 import com.openthinks.secretkeeper.client.model.TransferData;
@@ -39,6 +40,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -56,15 +58,19 @@ public class CategoryNewPanelController extends BaseController {
 	@FXML
 	private Button btn_category_dialog_cancel;
 
-	private CategoryService categoryService = BeanLoader.loadBean(CategoryService.class);;
+	private CategoryService categoryService = BeanLoader.loadBean(CategoryService.class);
+
+	private CategoryTreeViewPanelController treeViewPanelController = this
+			.getController(CategoryTreeViewPanelController.class);
 
 	@Override
 	protected void initEvents() {
 		super.initEvents();
 		ControlsDictionary.register(btn_category_dialog_save.getId(), ActionEvent.ACTION, (event) -> {
 			String title = txt_category_title.getText();
-			CategoryData categoryData = BeanLoader.loadBean(TransferData.class).getSelectedCategoryProperty()
-					.getValue();
+			TreeItem<CategoryData> treeItem = BeanLoader.loadBean(TransferData.class).getSelectedCategory();
+			Checker.require(treeItem).notNull();
+			CategoryData categoryData = treeItem.getValue();
 			if (categoryData != null) {
 				Category category = new Category(title, categoryData.getLevel() + 1);
 				Category parentCategory = categoryData.getPreload();
@@ -72,14 +78,26 @@ public class CategoryNewPanelController extends BaseController {
 					category.setParentID(parentCategory.getUniqueID());
 				category = categoryService.create(category);
 				if (category != null) {//create successfully
-					ModelUtils.toCategoryData(category);
+					CategoryData subCategoryData = ModelUtils.toCategoryData(category);
+					subCategoryData.setParent(categoryData);
+					TreeItem<CategoryData> subTreeItem = new TreeItem<>(subCategoryData);
+					treeItem.getChildren().add(subTreeItem);
+					closeDialog();
+					treeViewPanelController.setSelectedTreeItem(subTreeItem);
 				}
 			}
 		});
 		ControlsDictionary.register(btn_category_dialog_cancel.getId(), ActionEvent.ACTION, (event) -> {
-			Stage stage = (Stage) ap_category_dialog_panel.getScene().getWindow();
-			stage.close();
+			closeDialog();
 		});
+	}
+
+	/**
+	 * 
+	 */
+	protected void closeDialog() {
+		Stage stage = (Stage) ap_category_dialog_panel.getScene().getWindow();
+		stage.close();
 	}
 
 	@Override

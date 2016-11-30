@@ -26,7 +26,6 @@ public class ContentLeftPanelController extends BaseController {
 	@Override
 	protected void initModel() {
 		super.initModel();
-		BeanLoader.loadBean(TransferData.class).registerController(this);
 	}
 
 	@Override
@@ -36,8 +35,7 @@ public class ContentLeftPanelController extends BaseController {
 			ProcessLogger.debug("List view: Change selected item from " + oldValue + " to " + newValue);
 			if (newValue != null) {
 				String htmlText = newValue.getPreload().getContent();
-				BeanLoader.loadBean(TransferData.class).getController(ContentRightPanelController.class)
-						.setContent(htmlText);
+				getController(ContentRightPanelController.class).setContent(htmlText);
 			}
 		};
 	}

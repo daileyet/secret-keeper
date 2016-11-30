@@ -16,36 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: ContextMenuActionList.java 
-* @Package com.openthinks.secretkeeper.client.controller.support 
+* @Title: ControllerContext.java 
+* @Package com.openthinks.secretkeeper.client.controller.context 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Nov 29, 2016
+* @date Nov 30, 2016
 * @version V1.0   
 */
-package com.openthinks.secretkeeper.client.controller.support.ctvpc;
+package com.openthinks.secretkeeper.client.controller.context;
 
-import com.openthinks.secretkeeper.client.controller.CategoryTreeViewPanelController;
-
-import javafx.stage.WindowEvent;
+import com.openthinks.secretkeeper.client.controller.BaseController;
 
 /**
- * ContextMenu  event handler list for {@link CategoryTreeViewPanelController}
  * @author dailey.yet@outlook.com
  *
  */
-public final class ContextMenuActionList {
+public interface ControllerContext {
 
-	/*
-	 * TreeView context menu action
-	 */
+	public <T extends BaseController> T getController(Class<T> controllerClass);
 
-	public static void contextMenuOnShowing(WindowEvent event) {
-		ContextMenuItemsPropetyPool.compute();
+	public <T extends BaseController> void registerController(T controller);
 
-	}
-
-	public static void contextMenuOnShown(WindowEvent event) {
-
-	}
 }

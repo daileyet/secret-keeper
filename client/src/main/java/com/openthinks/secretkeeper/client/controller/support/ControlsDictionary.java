@@ -28,6 +28,7 @@ package com.openthinks.secretkeeper.client.controller.support;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 import com.openthinks.secretkeeper.client.controller.support.ctvpc.ContextMenuActionList;
 import com.openthinks.secretkeeper.client.controller.support.ctvpc.MenuActionList;
 
@@ -75,7 +76,11 @@ public final class ControlsDictionary {
 	public static final <T extends Event> void fireEventHandler(String eventCode, T event) {
 		EventHandler<T> eventHandler = (EventHandler<T>) getEventHandler(eventCode, event.getEventType());
 		if (eventHandler != null) {
-			eventHandler.handle(event);
+			try {
+				eventHandler.handle(event);
+			} catch (Exception e) {
+				ProcessLogger.error(e);
+			}
 		}
 	}
 

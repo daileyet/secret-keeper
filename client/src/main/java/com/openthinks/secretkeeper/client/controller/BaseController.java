@@ -36,6 +36,8 @@ import com.openthinks.libs.i18n.I18n;
 import com.openthinks.libs.i18n.I18nApplicationLocale;
 import com.openthinks.libs.utilities.logger.ProcessLogger;
 import com.openthinks.secretkeeper.client.ResourceLoader;
+import com.openthinks.secretkeeper.client.controller.context.ControllerContext;
+import com.openthinks.secretkeeper.client.controller.context.ControllerContextFactory;
 import com.openthinks.secretkeeper.client.controller.support.ControlsDictionary;
 
 import javafx.css.Styleable;
@@ -50,6 +52,10 @@ import javafx.scene.input.MouseEvent;
  */
 public abstract class BaseController implements Initializable, Observer {
 	protected ResourceBundle resourceBundle;
+	protected final ControllerContext context = ControllerContextFactory.get();
+	{
+		context.registerController(this);
+	}
 
 	/* (non-Javadoc)
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
@@ -74,6 +80,14 @@ public abstract class BaseController implements Initializable, Observer {
 	}
 
 	protected void initUI() throws IOException {
+	}
+
+	public ControllerContext getContext() {
+		return this.context;
+	}
+
+	public <T extends BaseController> T getController(Class<T> otherControllerClass) {
+		return this.context.getController(otherControllerClass);
 	}
 
 	/**

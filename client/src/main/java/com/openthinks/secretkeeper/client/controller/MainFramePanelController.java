@@ -3,8 +3,6 @@ package com.openthinks.secretkeeper.client.controller;
 import java.io.IOException;
 
 import com.openthinks.secretkeeper.client.ResourceLoader;
-import com.openthinks.secretkeeper.client.model.TransferData;
-import com.openthinks.secretkeeper.common.utils.BeanLoader;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +26,6 @@ public class MainFramePanelController extends BaseController {
 	@Override
 	protected void initModel() {
 		super.initModel();
-		BeanLoader.loadBean(TransferData.class).registerController(this);
 	}
 
 	@Override

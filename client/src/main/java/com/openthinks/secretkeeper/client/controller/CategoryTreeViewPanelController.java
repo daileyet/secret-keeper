@@ -31,18 +31,17 @@ public class CategoryTreeViewPanelController extends BaseController {
 	@FXML
 	private ContextMenu cm_tree_menus;
 
+	private ChangeListener<TreeItem<CategoryData>> treeNodeChangeListener;
+
 	private CategoryService categoryService = BeanLoader.loadBean(CategoryService.class);
 
 	private ItemService itemService = BeanLoader.loadBean(ItemService.class);
 
 	private CategoryData topCategoryData;
 
-	private ChangeListener<TreeItem<CategoryData>> treeNodeChangeListener;
-
 	@Override
 	protected void initModel() {
 		super.initModel();
-		BeanLoader.loadBean(TransferData.class).registerController(this);
 		topCategoryData = new CategoryData(new Category("TOP", StaticDict.CATEGORY_TOP_LEVEL));
 		Set<Category> categories = categoryService.getCategoriesByLevel(StaticDict.CATEGORY_ROOT_LEVEL);
 		categories.parallelStream().forEach((categoryDomain) -> {
@@ -81,22 +80,21 @@ public class CategoryTreeViewPanelController extends BaseController {
 
 		treeNodeChangeListener = (observable, oldValue, newValue) -> {
 			ProcessLogger.debug("Tree view: Change selected node from " + oldValue + " to " + newValue);
-			if (newValue != null) {
-				CategoryData categoryData = newValue.getValue();
-				Set<ItemData> itemDatas = null;
-				ProcessLogger.debug("Tree view: New selected node item size:" + categoryData.childrenItemSize());
-				if (categoryData.childrenItemSize() == 0) {
-					String categoryID = categoryData.getPreload().getUniqueID();
-					itemDatas = ModelUtils.toItemData(itemService.getItemsByCategory(categoryID));
-					categoryData.setChildrenItem(itemDatas);
-				} else {
-					itemDatas = categoryData.getChildrenItem();
-				}
-				BeanLoader.loadBean(TransferData.class)
-						.setItemDataPropertyValue(FXCollections.observableArrayList(itemDatas))
-						.setSelectedCategoryPropertyValue(categoryData);
-				ContextMenuItemsPropetyPool.compute(categoryData);
+			if (newValue == null)//nothing to do
+				return;
+			CategoryData categoryData = newValue.getValue();
+			Set<ItemData> itemDatas = null;
+			ProcessLogger.debug("Tree view: New selected node item size:" + categoryData.childrenItemSize());
+			if (categoryData.childrenItemSize() == 0) {
+				String categoryID = categoryData.getPreload().getUniqueID();
+				itemDatas = ModelUtils.toItemData(itemService.getItemsByCategory(categoryID));
+				categoryData.setChildrenItem(itemDatas);
+			} else {
+				itemDatas = categoryData.getChildrenItem();
 			}
+			BeanLoader.loadBean(TransferData.class).setSelectedCategoryPropertyValue(newValue)
+					.setItemDataPropertyValue(FXCollections.observableArrayList(itemDatas));
+
 		};
 	}
 
@@ -124,6 +122,10 @@ public class CategoryTreeViewPanelController extends BaseController {
 			item.getChildren().add(subItem);
 		});
 		return item;
+	}
+
+	public void setSelectedTreeItem(TreeItem<CategoryData> subTreeItem) {
+		tv_categories.getSelectionModel().select(subTreeItem);
 	}
 
 }
